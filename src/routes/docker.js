@@ -357,8 +357,9 @@ router.post('/build/prune', async (req, res, next) => {
 
 router.post('/images/create', async (req, res, next) => {
   try {
-    const result = await dockerService.pullImage(req.query.fromImage, req.query.tag);
-    res.json({ success: true, data: result });
+    const stream = await dockerService.pullImageStream(req.query.fromImage, req.query.tag);
+    res.setHeader('Content-Type', 'application/json');
+    stream.pipe(res);
   } catch (error) {
     next(error);
   }

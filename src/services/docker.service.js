@@ -110,6 +110,13 @@ class DockerService {
     });
   }
 
+  async pullImageStream(imageName, tag = 'latest') {
+    return this.request('POST', '/images/create', null, {
+      fromImage: imageName,
+      tag
+    }, { responseType: 'stream' });
+  }
+
   async removeImage(name, force = false) {
     return this.request('DELETE', `/images/${name}`, null, { force });
   }
