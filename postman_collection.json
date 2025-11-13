@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "Docker API Abstraction",
-    "description": "Complete Docker Engine API abstraction layer with authentication",
+    "name": "Docker API - Essential",
+    "description": "Essential Docker API endpoints",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "auth": {
@@ -140,7 +140,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"Image\": \"nginx:latest\",\n  \"name\": \"test-nginx\",\n  \"ExposedPorts\": {\n    \"80/tcp\": {}\n  },\n  \"HostConfig\": {\n    \"PortBindings\": {\n      \"80/tcp\": [\n        {\n          \"HostPort\": \"8080\"\n        }\n      ]\n    }\n  }\n}"
+              "raw": "{\n  \"Image\": \"nginx:latest\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/docker/containers/create?name=test-nginx",
@@ -150,24 +150,6 @@
                 {
                   "key": "name",
                   "value": "test-nginx"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Inspect Container",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/containers/:id/json",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "containers", ":id", "json"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "container_id"
                 }
               ]
             }
@@ -197,51 +179,9 @@
             "method": "POST",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/docker/containers/:id/stop?t=10",
+              "raw": "{{baseUrl}}/api/docker/containers/:id/stop",
               "host": ["{{baseUrl}}"],
               "path": ["api", "docker", "containers", ":id", "stop"],
-              "query": [
-                {
-                  "key": "t",
-                  "value": "10"
-                }
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "container_id"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Restart Container",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/containers/:id/restart",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "containers", ":id", "restart"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "container_id"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Kill Container",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/containers/:id/kill",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "containers", ":id", "kill"],
               "variable": [
                 {
                   "key": "id",
@@ -281,18 +221,10 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/docker/containers/:id/logs?stdout=true&stderr=true&tail=100",
+              "raw": "{{baseUrl}}/api/docker/containers/:id/logs?tail=100",
               "host": ["{{baseUrl}}"],
               "path": ["api", "docker", "containers", ":id", "logs"],
               "query": [
-                {
-                  "key": "stdout",
-                  "value": "true"
-                },
-                {
-                  "key": "stderr",
-                  "value": "true"
-                },
                 {
                   "key": "tail",
                   "value": "100"
@@ -304,96 +236,6 @@
                   "value": "container_id"
                 }
               ]
-            }
-          }
-        },
-        {
-          "name": "Container Stats",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/containers/:id/stats?stream=false",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "containers", ":id", "stats"],
-              "query": [
-                {
-                  "key": "stream",
-                  "value": "false"
-                }
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "container_id"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Container Top",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/containers/:id/top",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "containers", ":id", "top"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "container_id"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Pause Container",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/containers/:id/pause",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "containers", ":id", "pause"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "container_id"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Unpause Container",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/containers/:id/unpause",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "containers", ":id", "unpause"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "container_id"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Prune Containers",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/containers/prune",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "containers", "prune"]
             }
           }
         }
@@ -572,24 +414,6 @@
           }
         },
         {
-          "name": "Inspect Network",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/networks/:id",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "networks", ":id"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "network_id"
-                }
-              ]
-            }
-          }
-        },
-        {
           "name": "Create Network",
           "request": {
             "method": "POST",
@@ -601,66 +425,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"Name\": \"my-network\",\n  \"Driver\": \"bridge\"\n}"
+              "raw": "{\n  \"Name\": \"my-network\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/docker/networks/create",
               "host": ["{{baseUrl}}"],
               "path": ["api", "docker", "networks", "create"]
-            }
-          }
-        },
-        {
-          "name": "Connect Container to Network",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"Container\": \"container_id\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/networks/:id/connect",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "networks", ":id", "connect"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "network_id"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Disconnect Container from Network",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"Container\": \"container_id\",\n  \"Force\": false\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/networks/:id/disconnect",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "networks", ":id", "disconnect"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "network_id"
-                }
-              ]
             }
           }
         },
@@ -679,18 +449,6 @@
                   "value": "network_id"
                 }
               ]
-            }
-          }
-        },
-        {
-          "name": "Prune Networks",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/networks/prune",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "networks", "prune"]
             }
           }
         }
@@ -723,7 +481,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"Name\": \"my-volume\",\n  \"Driver\": \"local\"\n}"
+              "raw": "{\n  \"Name\": \"my-volume\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/docker/volumes/create",
@@ -733,9 +491,9 @@
           }
         },
         {
-          "name": "Inspect Volume",
+          "name": "Remove Volume",
           "request": {
-            "method": "GET",
+            "method": "DELETE",
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/docker/volumes/:name",
@@ -745,244 +503,6 @@
                 {
                   "key": "name",
                   "value": "my-volume"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Remove Volume",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/volumes/:name?force=false",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "volumes", ":name"],
-              "query": [
-                {
-                  "key": "force",
-                  "value": "false"
-                }
-              ],
-              "variable": [
-                {
-                  "key": "name",
-                  "value": "my-volume"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Prune Volumes",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/volumes/prune",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "volumes", "prune"]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Swarm",
-      "item": [
-        {
-          "name": "Inspect Swarm",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/swarm",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "swarm"]
-            }
-          }
-        },
-        {
-          "name": "Initialize Swarm",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"ListenAddr\": \"0.0.0.0:2377\",\n  \"AdvertiseAddr\": \"192.168.1.1:2377\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/swarm/init",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "swarm", "init"]
-            }
-          }
-        },
-        {
-          "name": "Join Swarm",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"ListenAddr\": \"0.0.0.0:2377\",\n  \"AdvertiseAddr\": \"192.168.1.1:2377\",\n  \"RemoteAddrs\": [\"192.168.1.1:2377\"],\n  \"JoinToken\": \"SWMTKN-1-token\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/swarm/join",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "swarm", "join"]
-            }
-          }
-        },
-        {
-          "name": "Leave Swarm",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/swarm/leave?force=false",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "swarm", "leave"],
-              "query": [
-                {
-                  "key": "force",
-                  "value": "false"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Get Unlock Key",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/swarm/unlockkey",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "swarm", "unlockkey"]
-            }
-          }
-        },
-        {
-          "name": "Unlock Swarm",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"UnlockKey\": \"unlock-key\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/swarm/unlock",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "swarm", "unlock"]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Services",
-      "item": [
-        {
-          "name": "List Services",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/services",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "services"]
-            }
-          }
-        },
-        {
-          "name": "Create Service",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"Name\": \"my-service\",\n  \"TaskTemplate\": {\n    \"ContainerSpec\": {\n      \"Image\": \"nginx:latest\"\n    }\n  }\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/services/create",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "services", "create"]
-            }
-          }
-        },
-        {
-          "name": "Inspect Service",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/services/:id",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "services", ":id"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "service_id"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Remove Service",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/services/:id",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "services", ":id"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "service_id"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "Service Logs",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/docker/services/:id/logs",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "docker", "services", ":id", "logs"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "service_id"
                 }
               ]
             }
