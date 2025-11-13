@@ -4,17 +4,17 @@ A secure Express.js API abstraction layer for Docker API with built-in authentic
 
 ## Features
 
-- 🔒 **Authentication**: Support for both JWT tokens and API keys
-- ⚡ **Rate Limiting**: Configurable request rate limits per IP/API key
-- 🐳 **Complete Docker API Coverage**: 
+- **Authentication**: Support for both JWT tokens and API keys
+- **Rate Limiting**: Configurable request rate limits per IP/API key
+- **Complete Docker API Coverage**: 
   - Container management (list, create, start, stop, restart, remove)
   - Image operations (list, pull, remove, search)
   - Volume management (list, create, remove)
   - Network operations (list, create, remove, connect/disconnect containers)
   - System information and monitoring
-- 🛡️ **Security**: Helmet.js, CORS support
-- 📝 **Logging**: Morgan request logging
-- 🚀 **Easy Configuration**: Environment-based configuration
+- **Security**: Helmet.js, CORS support
+- **Logging**: Morgan request logging
+- **Easy Configuration**: Environment-based configuration
 
 ## Prerequisites
 
@@ -194,7 +194,7 @@ Edit `/etc/docker/daemon.json`:
 DOCKER_SOCKET_PATH=/var/run/docker.sock
 ```
 
-⚠️ **Warning**: Exposing Docker API without TLS is insecure. Consider using TLS or keeping it localhost-only.
+**Warning**: Exposing Docker API without TLS is insecure. Consider using TLS or keeping it localhost-only.
 
 ## Rate Limiting
 

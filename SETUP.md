@@ -1,10 +1,10 @@
 # Quick Setup Guide
 
-## ✅ Project Successfully Created!
+## Project Successfully Created!
 
 Your Docker API Abstraction Layer has been initialized and pushed to GitHub.
 
-### 📦 What's Been Created:
+### What's Been Created:
 
 1. **Express.js Server** (`src/server.js`)
    - Configured with helmet, CORS, and logging
@@ -26,7 +26,7 @@ Your Docker API Abstraction Layer has been initialized and pushed to GitHub.
    - RESTful endpoints for all Docker operations
    - Standardized response format
 
-### 🚀 Next Steps:
+### Next Steps:
 
 1. **Configure your VPS Docker API access:**
    - Edit `.env` file with your VPS Docker host details
@@ -53,24 +53,24 @@ Your Docker API Abstraction Layer has been initialized and pushed to GitHub.
      http://localhost:3000/api/docker/containers?all=true
    ```
 
-### 📋 Git Commits Made:
+### Git Commits Made:
 
-1. ✅ `feat: initialize project with package.json and basic server setup`
-2. ✅ `feat: add authentication and rate limiting middleware`
-3. ✅ `feat: implement Docker API abstraction layer with complete CRUD operations`
-4. ✅ `docs: add comprehensive README and configuration module`
+1. `feat: initialize project with package.json and basic server setup`
+2. `feat: add authentication and rate limiting middleware`
+3. `feat: implement Docker API abstraction layer with complete CRUD operations`
+4. `docs: add comprehensive README and configuration module`
 
 All commits have been pushed to: `https://github.com/shahidx0x/docker-api-abstraction.git`
 
-### 🔐 Security Reminders:
+### Security Reminders:
 
-- ⚠️ Change the JWT_SECRET in `.env`
-- ⚠️ Generate strong API keys
-- ⚠️ Use HTTPS in production
-- ⚠️ Secure your Docker daemon (don't expose publicly without TLS)
-- ⚠️ Adjust rate limits based on your needs
+- Change the JWT_SECRET in `.env`
+- Generate strong API keys
+- Use HTTPS in production
+- Secure your Docker daemon (don't expose publicly without TLS)
+- Adjust rate limits based on your needs
 
-### 📚 API Documentation:
+### API Documentation:
 
 Full API documentation is in `README.md`, including:
 - All available endpoints
@@ -78,7 +78,7 @@ Full API documentation is in `README.md`, including:
 - Request/response examples
 - Configuration options
 
-### 🐳 Docker Daemon Setup:
+### Docker Daemon Setup:
 
 Make sure your VPS Docker daemon is accessible:
 - For local: Use Unix socket (`/var/run/docker.sock`)
@@ -90,4 +90,4 @@ Make sure your VPS Docker daemon is accessible:
 - Review `.env.example` for configuration options
 - All code is commented and organized by functionality
 
-Happy coding! 🎉
+Happy coding!
