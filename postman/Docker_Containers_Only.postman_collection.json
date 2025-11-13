@@ -1,0 +1,1020 @@
+{
+    "info":  {
+                 "name":  "Docker Containers API - Complete",
+                 "description":  "All 27 Docker Container endpoints for https://docker.eravend.net",
+                 "schema":  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+                 "_exporter_id":  "12345678"
+             },
+    "item":  [
+                 {
+                     "name":  "1. List Containers",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/json?all=true\u0026limit=10\u0026size=true",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "json"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "all",
+                                                                   "value":  "true",
+                                                                   "description":  "Show all containers (default shows just running)"
+                                                               },
+                                                               {
+                                                                   "key":  "limit",
+                                                                   "value":  "10",
+                                                                   "description":  "Number of containers to return"
+                                                               },
+                                                               {
+                                                                   "key":  "size",
+                                                                   "value":  "true",
+                                                                   "description":  "Return the size of container"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "List all containers with optional filters"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "2. Create Container",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "body":  {
+                                                  "mode":  "raw",
+                                                  "raw":  "{\n  \"Image\": \"nginx:latest\",\n  \"Cmd\": [\"nginx\", \"-g\", \"daemon off;\"],\n  \"ExposedPorts\": {\n    \"80/tcp\": {}\n  },\n  \"Env\": [\n    \"ENV=production\",\n    \"DEBUG=false\"\n  ],\n  \"HostConfig\": {\n    \"PortBindings\": {\n      \"80/tcp\": [\n        {\n          \"HostPort\": \"8080\"\n        }\n      ]\n    },\n    \"RestartPolicy\": {\n      \"Name\": \"unless-stopped\"\n    }\n  },\n  \"Labels\": {\n    \"env\": \"production\"\n  }\n}"
+                                              },
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/create?name={{containerName}}",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "create"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "name",
+                                                                   "value":  "{{containerName}}",
+                                                                   "description":  "Assign the specified name to the container"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Create a new container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "3. Inspect Container",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/json?size=true",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "json"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "size",
+                                                                   "value":  "true",
+                                                                   "description":  "Return the size of container"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Get detailed information about a container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "4. List Processes",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/top?ps_args=aux",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "top"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "ps_args",
+                                                                   "value":  "aux",
+                                                                   "description":  "ps arguments to use"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "List processes running inside a container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "5. Get Container Logs",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/logs?stdout=true\u0026stderr=true\u0026tail=100\u0026timestamps=true",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "logs"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "stdout",
+                                                                   "value":  "true",
+                                                                   "description":  "Return logs from stdout"
+                                                               },
+                                                               {
+                                                                   "key":  "stderr",
+                                                                   "value":  "true",
+                                                                   "description":  "Return logs from stderr"
+                                                               },
+                                                               {
+                                                                   "key":  "tail",
+                                                                   "value":  "100",
+                                                                   "description":  "Number of lines to show from the end"
+                                                               },
+                                                               {
+                                                                   "key":  "timestamps",
+                                                                   "value":  "true",
+                                                                   "description":  "Add timestamps to every log line"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Get stdout and stderr logs from a container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "6. Get Filesystem Changes",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/changes",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "changes"
+                                                          ]
+                                             },
+                                     "description":  "Get changes on a container\u0027s filesystem"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "7. Export Container",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/export",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "export"
+                                                          ]
+                                             },
+                                     "description":  "Export the contents of a container as a tarball"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "8. Get Container Stats",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/stats?stream=false\u0026one-shot=true",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "stats"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "stream",
+                                                                   "value":  "false",
+                                                                   "description":  "Stream the output"
+                                                               },
+                                                               {
+                                                                   "key":  "one-shot",
+                                                                   "value":  "true",
+                                                                   "description":  "Only get a single stat"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Get container resource usage statistics"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "9. Resize Container TTY",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/resize?h=40\u0026w=80",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "resize"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "h",
+                                                                   "value":  "40",
+                                                                   "description":  "Height of the TTY"
+                                                               },
+                                                               {
+                                                                   "key":  "w",
+                                                                   "value":  "80",
+                                                                   "description":  "Width of the TTY"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Resize the TTY for a container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "10. Start Container",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/start",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "start"
+                                                          ]
+                                             },
+                                     "description":  "Start a container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "11. Stop Container",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/stop?t=10",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "stop"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "t",
+                                                                   "value":  "10",
+                                                                   "description":  "Number of seconds to wait before killing"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Stop a running container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "12. Restart Container",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/restart?t=10",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "restart"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "t",
+                                                                   "value":  "10",
+                                                                   "description":  "Number of seconds to wait before killing"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Restart a container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "13. Kill Container",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/kill?signal=SIGKILL",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "kill"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "signal",
+                                                                   "value":  "SIGKILL",
+                                                                   "description":  "Signal to send (SIGKILL, SIGTERM, etc.)"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Kill a running container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "14. Update Container",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "body":  {
+                                                  "mode":  "raw",
+                                                  "raw":  "{\n  \"Memory\": 536870912,\n  \"MemorySwap\": 1073741824,\n  \"CpuShares\": 512,\n  \"RestartPolicy\": {\n    \"Name\": \"on-failure\",\n    \"MaximumRetryCount\": 5\n  }\n}"
+                                              },
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/update",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "update"
+                                                          ]
+                                             },
+                                     "description":  "Update configuration of a container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "15. Rename Container",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/rename?name=new-container-name",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "rename"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "name",
+                                                                   "value":  "new-container-name",
+                                                                   "description":  "New name for the container"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Rename a container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "16. Pause Container",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/pause",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "pause"
+                                                          ]
+                                             },
+                                     "description":  "Pause all processes within a container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "17. Unpause Container",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/unpause",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "unpause"
+                                                          ]
+                                             },
+                                     "description":  "Unpause all processes within a container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "18. Attach to Container",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/attach?stream=true\u0026stdin=false\u0026stdout=true\u0026stderr=true",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "attach"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "stream",
+                                                                   "value":  "true",
+                                                                   "description":  "Stream the response"
+                                                               },
+                                                               {
+                                                                   "key":  "stdin",
+                                                                   "value":  "false",
+                                                                   "description":  "Attach to stdin"
+                                                               },
+                                                               {
+                                                                   "key":  "stdout",
+                                                                   "value":  "true",
+                                                                   "description":  "Attach to stdout"
+                                                               },
+                                                               {
+                                                                   "key":  "stderr",
+                                                                   "value":  "true",
+                                                                   "description":  "Attach to stderr"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Attach to a container to read its output or send it input"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "19. Wait Container",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/wait?condition=not-running",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "wait"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "condition",
+                                                                   "value":  "not-running",
+                                                                   "description":  "Wait until container reaches given condition"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Block until a container stops, then returns the exit code"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "20. Remove Container",
+                     "request":  {
+                                     "method":  "DELETE",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}?v=true\u0026force=true\u0026link=false",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "v",
+                                                                   "value":  "true",
+                                                                   "description":  "Remove the volumes associated with the container"
+                                                               },
+                                                               {
+                                                                   "key":  "force",
+                                                                   "value":  "true",
+                                                                   "description":  "Force removal of running container"
+                                                               },
+                                                               {
+                                                                   "key":  "link",
+                                                                   "value":  "false",
+                                                                   "description":  "Remove the specified link"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Remove a container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "21. Get Archive Info (HEAD)",
+                     "request":  {
+                                     "method":  "HEAD",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/archive?path=/etc/nginx",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "archive"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "path",
+                                                                   "value":  "/etc/nginx",
+                                                                   "description":  "Resource in the container\u0027s filesystem"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Get information about files in a container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "22. Get Archive from Container",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/archive?path=/etc/nginx",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "archive"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "path",
+                                                                   "value":  "/etc/nginx",
+                                                                   "description":  "Resource in the container\u0027s filesystem to archive"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Get a tar archive of a resource in the container\u0027s filesystem"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "23. Extract Archive to Container",
+                     "request":  {
+                                     "method":  "PUT",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/x-tar"
+                                                    },
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "body":  {
+                                                  "mode":  "raw",
+                                                  "raw":  ""
+                                              },
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/archive?path=/tmp\u0026noOverwriteDirNonDir=false",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "archive"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "path",
+                                                                   "value":  "/tmp",
+                                                                   "description":  "Path to directory in container to extract archive"
+                                                               },
+                                                               {
+                                                                   "key":  "noOverwriteDirNonDir",
+                                                                   "value":  "false",
+                                                                   "description":  "Prevent overwriting existing directories"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Extract an archive of files or folders to a directory in a container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "24. Prune Containers",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/prune",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "prune"
+                                                          ]
+                                             },
+                                     "description":  "Delete stopped containers"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "25. Create Exec Instance",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "body":  {
+                                                  "mode":  "raw",
+                                                  "raw":  "{\n  \"AttachStdin\": false,\n  \"AttachStdout\": true,\n  \"AttachStderr\": true,\n  \"Tty\": false,\n  \"Cmd\": [\n    \"ls\",\n    \"-la\",\n    \"/\"\n  ],\n  \"Env\": [\n    \"FOO=bar\"\n  ],\n  \"Privileged\": false,\n  \"User\": \"root\"\n}"
+                                              },
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/containers/{{containerId}}/exec",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "containers",
+                                                              "{{containerId}}",
+                                                              "exec"
+                                                          ]
+                                             },
+                                     "description":  "Create an exec instance to run a command in a running container"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "26. Start Exec Instance",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "body":  {
+                                                  "mode":  "raw",
+                                                  "raw":  "{\n  \"Detach\": false,\n  \"Tty\": false\n}"
+                                              },
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/exec/{{execId}}/start",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "exec",
+                                                              "{{execId}}",
+                                                              "start"
+                                                          ]
+                                             },
+                                     "description":  "Start a previously set up exec instance"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "27. Resize Exec Instance TTY",
+                     "request":  {
+                                     "method":  "POST",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/exec/{{execId}}/resize?h=40\u0026w=80",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "exec",
+                                                              "{{execId}}",
+                                                              "resize"
+                                                          ],
+                                                 "query":  [
+                                                               {
+                                                                   "key":  "h",
+                                                                   "value":  "40",
+                                                                   "description":  "Height of the TTY"
+                                                               },
+                                                               {
+                                                                   "key":  "w",
+                                                                   "value":  "80",
+                                                                   "description":  "Width of the TTY"
+                                                               }
+                                                           ]
+                                             },
+                                     "description":  "Resize the TTY session used by an exec instance"
+                                 },
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "name":  "28. Inspect Exec Instance",
+                     "request":  {
+                                     "method":  "GET",
+                                     "header":  [
+                                                    {
+                                                        "key":  "X-API-Key",
+                                                        "value":  "eravend-123456"
+                                                    }
+                                                ],
+                                     "url":  {
+                                                 "raw":  "{{baseUrl}}/exec/{{execId}}/json",
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "path":  [
+                                                              "exec",
+                                                              "{{execId}}",
+                                                              "json"
+                                                          ]
+                                             },
+                                     "description":  "Get detailed information about an exec instance"
+                                 },
+                     "response":  [
+
+                                  ]
+                 }
+             ],
+    "variable":  [
+                     {
+                         "key":  "baseUrl",
+                         "value":  "https://docker.eravend.net/api/docker",
+                         "type":  "string"
+                     },
+                     {
+                         "key":  "containerId",
+                         "value":  "your-container-id",
+                         "type":  "string"
+                     },
+                     {
+                         "key":  "containerName",
+                         "value":  "my-nginx",
+                         "type":  "string"
+                     },
+                     {
+                         "key":  "execId",
+                         "value":  "exec-id-here",
+                         "type":  "string"
+                     }
+                 ]
+}

@@ -197,3 +197,18 @@ These endpoints pipe the stream directly to the response.
 ✅ JWT and API key authentication on all endpoints
 ✅ Rate limiting protection
 ✅ Auto-deployed via GitHub Actions
+
+
+Structure Order: info → item → variable (variables MUST be at the bottom)
+Each request MUST have: "response": [] array (even if empty)
+Info section MUST have: name, description, schema
+URL structure: "host": ["{{baseUrl}}"] (baseUrl in array format)
+URL components: raw, host, path, query (all required)
+Query parameters: Each has key, value, description (optional disabled: true)
+Flat structure preferred: Avoid deep nested folders (max 1 level)
+Request numbering: Use "1. Name", "2. Name" for clear ordering
+Body format: Use \n for newlines in JSON strings
+Variables format: key, value, type: "string"
+Headers: Always array format with key and value
+Path variables: Use {{variableName}} format in paths
+All JSON must be valid: No trailing commas, proper closing brackets
