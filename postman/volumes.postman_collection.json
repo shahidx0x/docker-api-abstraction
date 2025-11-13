@@ -1,0 +1,132 @@
+{
+  "info": {
+    "name": "Docker Volumes API - Complete",
+    "description": "All Docker Volume endpoints for https://docker.eravend.net",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12345678"
+  },
+  "item": [
+    {
+      "name": "1. List Volumes",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/volumes",
+          "host": ["{{baseUrl}}"],
+          "path": ["volumes"]
+        },
+        "description": "List all volumes"
+      },
+      "response": []
+    },
+    {
+      "name": "2. Create Volume",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"Name\": \"my-volume\",\n  \"Driver\": \"local\",\n  \"Labels\": {\"env\": \"production\"}\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/volumes/create",
+          "host": ["{{baseUrl}}"],
+          "path": ["volumes", "create"]
+        },
+        "description": "Create a new volume"
+      },
+      "response": []
+    },
+    {
+      "name": "3. Inspect Volume",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/volumes/{{volumeName}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["volumes", "{{volumeName}}"]
+        },
+        "description": "Get detailed information about a volume"
+      },
+      "response": []
+    },
+    {
+      "name": "4. Remove Volume",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/volumes/{{volumeName}}?force=false",
+          "host": ["{{baseUrl}}"],
+          "path": ["volumes", "{{volumeName}}"],
+          "query": [
+            {
+              "key": "force",
+              "value": "false",
+              "description": "Force removal of volume even if in use"
+            }
+          ]
+        },
+        "description": "Remove a volume"
+      },
+      "response": []
+    },
+    {
+      "name": "5. Prune Volumes",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/volumes/prune",
+          "host": ["{{baseUrl}}"],
+          "path": ["volumes", "prune"]
+        },
+        "description": "Delete unused volumes"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://docker.eravend.net/api/docker",
+      "type": "string"
+    },
+    {
+      "key": "volumeName",
+      "value": "my-volume",
+      "type": "string"
+    }
+  ]
+}

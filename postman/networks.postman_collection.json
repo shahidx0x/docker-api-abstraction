@@ -1,0 +1,184 @@
+{
+  "info": {
+    "name": "Docker Networks API - Complete",
+    "description": "All Docker Network endpoints for https://docker.eravend.net",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12345678"
+  },
+  "item": [
+    {
+      "name": "1. List Networks",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/networks",
+          "host": ["{{baseUrl}}"],
+          "path": ["networks"]
+        },
+        "description": "List all networks"
+      },
+      "response": []
+    },
+    {
+      "name": "2. Inspect Network",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/networks/{{networkId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["networks", "{{networkId}}"]
+        },
+        "description": "Get detailed information about a network"
+      },
+      "response": []
+    },
+    {
+      "name": "3. Create Network",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"Name\": \"my-network\",\n  \"Driver\": \"bridge\",\n  \"IPAM\": {\n    \"Config\": [{\"Subnet\": \"172.20.0.0/16\", \"Gateway\": \"172.20.0.1\"}]\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/networks/create",
+          "host": ["{{baseUrl}}"],
+          "path": ["networks", "create"]
+        },
+        "description": "Create a new network"
+      },
+      "response": []
+    },
+    {
+      "name": "4. Connect Container",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"Container\": \"{{containerId}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/networks/{{networkId}}/connect",
+          "host": ["{{baseUrl}}"],
+          "path": ["networks", "{{networkId}}", "connect"]
+        },
+        "description": "Connect a container to a network"
+      },
+      "response": []
+    },
+    {
+      "name": "5. Disconnect Container",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"Container\": \"{{containerId}}\",\n  \"Force\": false\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/networks/{{networkId}}/disconnect",
+          "host": ["{{baseUrl}}"],
+          "path": ["networks", "{{networkId}}", "disconnect"]
+        },
+        "description": "Disconnect a container from a network"
+      },
+      "response": []
+    },
+    {
+      "name": "6. Remove Network",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/networks/{{networkId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["networks", "{{networkId}}"]
+        },
+        "description": "Remove a network"
+      },
+      "response": []
+    },
+    {
+      "name": "7. Prune Networks",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/networks/prune",
+          "host": ["{{baseUrl}}"],
+          "path": ["networks", "prune"]
+        },
+        "description": "Delete unused networks"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://docker.eravend.net/api/docker",
+      "type": "string"
+    },
+    {
+      "key": "networkId",
+      "value": "network-id",
+      "type": "string"
+    },
+    {
+      "key": "containerId",
+      "value": "your-container-id",
+      "type": "string"
+    }
+  ]
+}

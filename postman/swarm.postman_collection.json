@@ -1,0 +1,196 @@
+{
+  "info": {
+    "name": "Docker Swarm API - Complete",
+    "description": "All Docker Swarm endpoints for https://docker.eravend.net",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12345678"
+  },
+  "item": [
+    {
+      "name": "1. Inspect Swarm",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/swarm",
+          "host": ["{{baseUrl}}"],
+          "path": ["swarm"]
+        },
+        "description": "Inspect the swarm"
+      },
+      "response": []
+    },
+    {
+      "name": "2. Initialize Swarm",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ListenAddr\": \"0.0.0.0:2377\",\n  \"AdvertiseAddr\": \"192.168.1.1:2377\",\n  \"ForceNewCluster\": false\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/swarm/init",
+          "host": ["{{baseUrl}}"],
+          "path": ["swarm", "init"]
+        },
+        "description": "Initialize a new swarm"
+      },
+      "response": []
+    },
+    {
+      "name": "3. Join Swarm",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ListenAddr\": \"0.0.0.0:2377\",\n  \"AdvertiseAddr\": \"192.168.1.2:2377\",\n  \"RemoteAddrs\": [\"192.168.1.1:2377\"],\n  \"JoinToken\": \"SWMTKN-1-token-here\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/swarm/join",
+          "host": ["{{baseUrl}}"],
+          "path": ["swarm", "join"]
+        },
+        "description": "Join an existing swarm"
+      },
+      "response": []
+    },
+    {
+      "name": "4. Leave Swarm",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/swarm/leave?force=false",
+          "host": ["{{baseUrl}}"],
+          "path": ["swarm", "leave"],
+          "query": [
+            {
+              "key": "force",
+              "value": "false",
+              "description": "Force leave even if last manager"
+            }
+          ]
+        },
+        "description": "Leave the swarm"
+      },
+      "response": []
+    },
+    {
+      "name": "5. Update Swarm",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"Orchestration\": {\"TaskHistoryRetentionLimit\": 10},\n  \"Raft\": {\"SnapshotInterval\": 10000}\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/swarm/update?version=1",
+          "host": ["{{baseUrl}}"],
+          "path": ["swarm", "update"],
+          "query": [
+            {
+              "key": "version",
+              "value": "1",
+              "description": "The version number of the swarm object being updated"
+            }
+          ]
+        },
+        "description": "Update the swarm"
+      },
+      "response": []
+    },
+    {
+      "name": "6. Get Unlock Key",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/swarm/unlockkey",
+          "host": ["{{baseUrl}}"],
+          "path": ["swarm", "unlockkey"]
+        },
+        "description": "Get the unlock key"
+      },
+      "response": []
+    },
+    {
+      "name": "7. Unlock Swarm",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"UnlockKey\": \"SWMKEY-1-unlock-key-here\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/swarm/unlock",
+          "host": ["{{baseUrl}}"],
+          "path": ["swarm", "unlock"]
+        },
+        "description": "Unlock a locked manager"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://docker.eravend.net/api/docker",
+      "type": "string"
+    }
+  ]
+}

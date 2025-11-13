@@ -1,0 +1,146 @@
+{
+  "info": {
+    "name": "Docker System API - Complete",
+    "description": "All 6 Docker System endpoints for https://docker.eravend.net",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12345678"
+  },
+  "item": [
+    {
+      "name": "1. Ping Docker",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/ping",
+          "host": ["{{baseUrl}}"],
+          "path": ["ping"]
+        },
+        "description": "Check if Docker daemon is accessible"
+      },
+      "response": []
+    },
+    {
+      "name": "2. Get Version",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/version",
+          "host": ["{{baseUrl}}"],
+          "path": ["version"]
+        },
+        "description": "Get Docker version information"
+      },
+      "response": []
+    },
+    {
+      "name": "3. Get System Info",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/info",
+          "host": ["{{baseUrl}}"],
+          "path": ["info"]
+        },
+        "description": "Get system-wide information about Docker"
+      },
+      "response": []
+    },
+    {
+      "name": "4. Get Data Usage",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/system/df",
+          "host": ["{{baseUrl}}"],
+          "path": ["system", "df"]
+        },
+        "description": "Get disk usage information"
+      },
+      "response": []
+    },
+    {
+      "name": "5. Monitor Events",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/events?since=1640995200",
+          "host": ["{{baseUrl}}"],
+          "path": ["events"],
+          "query": [
+            {
+              "key": "since",
+              "value": "1640995200",
+              "description": "Unix timestamp"
+            }
+          ]
+        },
+        "description": "Stream Docker events"
+      },
+      "response": []
+    },
+    {
+      "name": "6. Authenticate Registry",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"dockeruser\",\n  \"password\": \"dockerpass\",\n  \"serveraddress\": \"https://index.docker.io/v1/\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth",
+          "host": ["{{baseUrl}}"],
+          "path": ["auth"]
+        },
+        "description": "Authenticate with Docker registry"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://docker.eravend.net/api/docker",
+      "type": "string"
+    }
+  ]
+}

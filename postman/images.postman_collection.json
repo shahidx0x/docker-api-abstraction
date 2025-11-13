@@ -1,0 +1,426 @@
+{
+  "info": {
+    "name": "Docker Images API - Complete",
+    "description": "All Docker Image endpoints for https://docker.eravend.net",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12345678"
+  },
+  "item": [
+    {
+      "name": "1. List Images",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/images/json?all=false",
+          "host": ["{{baseUrl}}"],
+          "path": ["images", "json"],
+          "query": [
+            {
+              "key": "all",
+              "value": "false",
+              "description": "Show all images (default shows only tagged)"
+            }
+          ]
+        },
+        "description": "List all images"
+      },
+      "response": []
+    },
+    {
+      "name": "2. Build Image",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/x-tar"
+          },
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{baseUrl}}/build?t={{imageName}}&dockerfile=Dockerfile",
+          "host": ["{{baseUrl}}"],
+          "path": ["build"],
+          "query": [
+            {
+              "key": "t",
+              "value": "{{imageName}}",
+              "description": "Name and optionally a tag in the 'name:tag' format"
+            },
+            {
+              "key": "dockerfile",
+              "value": "Dockerfile",
+              "description": "Path within the build context to the Dockerfile"
+            }
+          ]
+        },
+        "description": "Build an image from a tar archive containing a Dockerfile"
+      },
+      "response": []
+    },
+    {
+      "name": "3. Prune Build Cache",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/build/prune",
+          "host": ["{{baseUrl}}"],
+          "path": ["build", "prune"]
+        },
+        "description": "Delete build cache"
+      },
+      "response": []
+    },
+    {
+      "name": "4. Pull Image",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/images/create?fromImage=nginx&tag=latest",
+          "host": ["{{baseUrl}}"],
+          "path": ["images", "create"],
+          "query": [
+            {
+              "key": "fromImage",
+              "value": "nginx",
+              "description": "Name of the image to pull"
+            },
+            {
+              "key": "tag",
+              "value": "latest",
+              "description": "Tag of the image"
+            }
+          ]
+        },
+        "description": "Pull an image from a registry"
+      },
+      "response": []
+    },
+    {
+      "name": "5. Inspect Image",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/images/{{imageName}}/json",
+          "host": ["{{baseUrl}}"],
+          "path": ["images", "{{imageName}}", "json"]
+        },
+        "description": "Get detailed information about an image"
+      },
+      "response": []
+    },
+    {
+      "name": "6. Get Image History",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/images/{{imageName}}/history",
+          "host": ["{{baseUrl}}"],
+          "path": ["images", "{{imageName}}", "history"]
+        },
+        "description": "Get the history of an image"
+      },
+      "response": []
+    },
+    {
+      "name": "7. Push Image",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Registry-Auth",
+            "value": "base64-encoded-auth"
+          },
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/images/{{imageName}}/push",
+          "host": ["{{baseUrl}}"],
+          "path": ["images", "{{imageName}}", "push"]
+        },
+        "description": "Push an image to a registry"
+      },
+      "response": []
+    },
+    {
+      "name": "8. Tag Image",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/images/{{imageName}}/tag?repo=myrepo/myimage&tag=v1.0",
+          "host": ["{{baseUrl}}"],
+          "path": ["images", "{{imageName}}", "tag"],
+          "query": [
+            {
+              "key": "repo",
+              "value": "myrepo/myimage",
+              "description": "The repository to tag in"
+            },
+            {
+              "key": "tag",
+              "value": "v1.0",
+              "description": "The name of the new tag"
+            }
+          ]
+        },
+        "description": "Tag an image into a repository"
+      },
+      "response": []
+    },
+    {
+      "name": "9. Remove Image",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/images/{{imageName}}?force=true",
+          "host": ["{{baseUrl}}"],
+          "path": ["images", "{{imageName}}"],
+          "query": [
+            {
+              "key": "force",
+              "value": "true",
+              "description": "Remove the image even if it is being used by stopped containers"
+            }
+          ]
+        },
+        "description": "Remove an image"
+      },
+      "response": []
+    },
+    {
+      "name": "10. Search Images",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/images/search?term=nginx&limit=25",
+          "host": ["{{baseUrl}}"],
+          "path": ["images", "search"],
+          "query": [
+            {
+              "key": "term",
+              "value": "nginx",
+              "description": "Term to search"
+            },
+            {
+              "key": "limit",
+              "value": "25",
+              "description": "Maximum number of results"
+            }
+          ]
+        },
+        "description": "Search for images on Docker Hub"
+      },
+      "response": []
+    },
+    {
+      "name": "11. Prune Images",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/images/prune",
+          "host": ["{{baseUrl}}"],
+          "path": ["images", "prune"]
+        },
+        "description": "Delete unused images"
+      },
+      "response": []
+    },
+    {
+      "name": "12. Commit Container",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"comment\": \"My custom image\",\n  \"author\": \"John Doe\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/commit?container={{containerId}}&repo=myimage&tag=v1.0",
+          "host": ["{{baseUrl}}"],
+          "path": ["commit"],
+          "query": [
+            {
+              "key": "container",
+              "value": "{{containerId}}",
+              "description": "The ID or name of the container to commit"
+            },
+            {
+              "key": "repo",
+              "value": "myimage",
+              "description": "Repository name for the created image"
+            },
+            {
+              "key": "tag",
+              "value": "v1.0",
+              "description": "Tag name for the created image"
+            }
+          ]
+        },
+        "description": "Create a new image from a container's changes"
+      },
+      "response": []
+    },
+    {
+      "name": "13. Export Image",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/images/{{imageName}}/get",
+          "host": ["{{baseUrl}}"],
+          "path": ["images", "{{imageName}}", "get"]
+        },
+        "description": "Export an image in tar format"
+      },
+      "response": []
+    },
+    {
+      "name": "14. Export Multiple Images",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/images/get?names=nginx:latest,redis:alpine",
+          "host": ["{{baseUrl}}"],
+          "path": ["images", "get"],
+          "query": [
+            {
+              "key": "names",
+              "value": "nginx:latest,redis:alpine",
+              "description": "Names of images to export"
+            }
+          ]
+        },
+        "description": "Export multiple images as a tarball"
+      },
+      "response": []
+    },
+    {
+      "name": "15. Load Images",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/x-tar"
+          },
+          {
+            "key": "X-API-Key",
+            "value": "eravend-123456"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{baseUrl}}/images/load",
+          "host": ["{{baseUrl}}"],
+          "path": ["images", "load"]
+        },
+        "description": "Load images from a tar archive"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://docker.eravend.net/api/docker",
+      "type": "string"
+    },
+    {
+      "key": "imageName",
+      "value": "nginx:latest",
+      "type": "string"
+    },
+    {
+      "key": "containerId",
+      "value": "your-container-id",
+      "type": "string"
+    }
+  ]
+}
