@@ -24,7 +24,7 @@ class DockerService {
   /**
    * Make a request to Docker API
    */
-  async request(method, endpoint, data = null, params = {}) {
+  async request(method, endpoint, data = null, params = {}, additionalConfig = {}) {
     try {
       const config = {
         method,
@@ -33,7 +33,8 @@ class DockerService {
         headers: {
           'Content-Type': 'application/json'
         },
-        ...this.axiosConfig
+        ...this.axiosConfig,
+        ...additionalConfig
       };
 
       if (data) {
@@ -41,6 +42,12 @@ class DockerService {
       }
 
       const response = await axios(config);
+      
+      // For stream responses, return the stream directly
+      if (additionalConfig.responseType === 'stream') {
+        return response.data;
+      }
+      
       return response.data;
     } catch (error) {
       throw {
