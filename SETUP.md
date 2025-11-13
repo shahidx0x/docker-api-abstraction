@@ -28,9 +28,9 @@ Your Docker API Abstraction Layer has been initialized and pushed to GitHub.
 
 ### Next Steps:
 
-1. **Configure your VPS Docker API access:**
-   - Edit `.env` file with your VPS Docker host details
-   - Default: `DOCKER_HOST=localhost` and `DOCKER_PORT=2375`
+1. **Configure Docker socket access:**
+   - Ensure Docker socket is mounted in `.env`: `DOCKER_SOCKET=/var/run/docker.sock`
+   - The application uses Unix socket for secure Docker communication
 
 2. **Set up authentication:**
    - Generate strong API keys in `.env`: `API_KEYS=key1,key2,key3`

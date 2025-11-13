@@ -57,9 +57,8 @@ cp .env.example .env
 PORT=3000
 NODE_ENV=production
 
-# Docker Configuration
-DOCKER_HOST=localhost
-DOCKER_PORT=2375
+# Docker Configuration (Unix Socket Only)
+DOCKER_SOCKET=/var/run/docker.sock
 DOCKER_API_VERSION=v1.43
 
 # Authentication

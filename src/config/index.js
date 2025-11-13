@@ -4,10 +4,8 @@ module.exports = {
     env: process.env.NODE_ENV || 'development'
   },
   docker: {
-    host: process.env.DOCKER_HOST || 'localhost',
-    port: process.env.DOCKER_PORT || '2375',
-    apiVersion: process.env.DOCKER_API_VERSION || 'v1.43',
-    socketPath: process.env.DOCKER_SOCKET_PATH || '/var/run/docker.sock'
+    socketPath: process.env.DOCKER_SOCKET || '/var/run/docker.sock',
+    apiVersion: process.env.DOCKER_API_VERSION || 'v1.43'
   },
   auth: {
     jwtSecret: process.env.JWT_SECRET || 'your-super-secret-jwt-key',
