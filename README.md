@@ -2,6 +2,18 @@
 
 A secure Express.js API abstraction layer for Docker API with built-in authentication and rate limiting.
 
+## Why This Project Exists
+
+Docker's native HTTP API has a critical security flaw: **it has no built-in authentication**. Anyone who can reach your Docker API endpoint has complete root-level control over your host machine. This project solves that problem by providing:
+
+- **Authentication Layer**: Docker API is completely open by default. This adds JWT and API key authentication.
+- **Rate Limiting**: Protect against API abuse and DoS attacks - something Docker doesn't provide.
+- **Audit & Logging**: Track who's doing what with your Docker resources.
+- **Simplified Access Control**: Manage permissions through API keys instead of complex TLS certificate management.
+- **REST-ful Interface**: Clean, standardized endpoints that are easier to consume than raw Docker API.
+
+Without this layer (or similar protection), exposing Docker API to a network is equivalent to giving everyone root SSH access to your server.
+
 ## Features
 
 - **Authentication**: Support for both JWT tokens and API keys
@@ -214,6 +226,40 @@ All errors return JSON with the following format:
   }
 }
 ```
+
+## Docker Deployment
+
+### Build and run with Docker:
+
+```bash
+# Build image
+docker build -t docker-api-abstraction .
+
+# Run container
+docker run -d \
+  -p 3000:3000 \
+  -e DOCKER_HOST=your-docker-host \
+  -e DOCKER_PORT=2375 \
+  -e API_KEYS=your-api-key-1,your-api-key-2 \
+  -e JWT_SECRET=your-secret-key \
+  --name docker-api-abstraction \
+  docker-api-abstraction
+```
+
+### Using Docker Compose:
+
+```bash
+# Start services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
+**Note**: Update `.env` file or set environment variables in `docker-compose.yml` before deploying.
 
 ## Contributing
 
