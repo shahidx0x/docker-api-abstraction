@@ -1,0 +1,953 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		"name": "Docker API Abstraction",
+		"description": "Secure REST API for Docker with authentication and rate limiting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/health",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			}
+		},
+		{
+			"name": "System - Ping",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/ping",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"ping"
+					]
+				}
+			}
+		},
+		{
+			"name": "System - Version",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/version",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"version"
+					]
+				}
+			}
+		},
+		{
+			"name": "System - Info",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/info",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"info"
+					]
+				}
+			}
+		},
+		{
+			"name": "System - Disk Usage",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/system/df",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"system",
+						"df"
+					]
+				}
+			}
+		},
+		{
+			"name": "Containers - List All",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/containers?all=true",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"containers"
+					],
+					"query": [
+						{
+							"key": "all",
+							"value": "true"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Containers - Get Details",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/containers/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"containers",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "container_name_or_id"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Containers - Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Image\": \"nginx:latest\",\n  \"name\": \"my-nginx\",\n  \"ExposedPorts\": {\n    \"80/tcp\": {}\n  },\n  \"HostConfig\": {\n    \"PortBindings\": {\n      \"80/tcp\": [\n        {\n          \"HostPort\": \"8080\"\n        }\n      ]\n    }\n  }\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/containers/create",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"containers",
+						"create"
+					]
+				}
+			}
+		},
+		{
+			"name": "Containers - Start",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/containers/:id/start",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"containers",
+						":id",
+						"start"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "container_name_or_id"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Containers - Stop",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/containers/:id/stop?timeout=10",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"containers",
+						":id",
+						"stop"
+					],
+					"query": [
+						{
+							"key": "timeout",
+							"value": "10"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "container_name_or_id"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Containers - Restart",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/containers/:id/restart?timeout=10",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"containers",
+						":id",
+						"restart"
+					],
+					"query": [
+						{
+							"key": "timeout",
+							"value": "10"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "container_name_or_id"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Containers - Remove",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/containers/:id?force=true&volumes=false",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"containers",
+						":id"
+					],
+					"query": [
+						{
+							"key": "force",
+							"value": "true"
+						},
+						{
+							"key": "volumes",
+							"value": "false"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "container_name_or_id"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Containers - Logs",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/containers/:id/logs?stdout=true&stderr=true&tail=100",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"containers",
+						":id",
+						"logs"
+					],
+					"query": [
+						{
+							"key": "stdout",
+							"value": "true"
+						},
+						{
+							"key": "stderr",
+							"value": "true"
+						},
+						{
+							"key": "tail",
+							"value": "100"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "container_name_or_id"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Containers - Stats",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/containers/:id/stats?stream=false",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"containers",
+						":id",
+						"stats"
+					],
+					"query": [
+						{
+							"key": "stream",
+							"value": "false"
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "container_name_or_id"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Images - List",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/images?all=false",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"images"
+					],
+					"query": [
+						{
+							"key": "all",
+							"value": "false"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Images - Get Details",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/images/:name",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"images",
+						":name"
+					],
+					"variable": [
+						{
+							"key": "name",
+							"value": "nginx:latest"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Images - Pull",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"image\": \"nginx\",\n  \"tag\": \"latest\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/images/pull",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"images",
+						"pull"
+					]
+				}
+			}
+		},
+		{
+			"name": "Images - Remove",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/images/:name?force=false",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"images",
+						":name"
+					],
+					"query": [
+						{
+							"key": "force",
+							"value": "false"
+						}
+					],
+					"variable": [
+						{
+							"key": "name",
+							"value": "nginx:latest"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Images - Search",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/images/search/:term",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"images",
+						"search",
+						":term"
+					],
+					"variable": [
+						{
+							"key": "term",
+							"value": "nginx"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Volumes - List",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/volumes",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"volumes"
+					]
+				}
+			}
+		},
+		{
+			"name": "Volumes - Get Details",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/volumes/:name",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"volumes",
+						":name"
+					],
+					"variable": [
+						{
+							"key": "name",
+							"value": "my-volume"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Volumes - Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Name\": \"my-volume\",\n  \"Driver\": \"local\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/volumes/create",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"volumes",
+						"create"
+					]
+				}
+			}
+		},
+		{
+			"name": "Volumes - Remove",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/volumes/:name?force=false",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"volumes",
+						":name"
+					],
+					"query": [
+						{
+							"key": "force",
+							"value": "false"
+						}
+					],
+					"variable": [
+						{
+							"key": "name",
+							"value": "my-volume"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Networks - List",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/networks",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"networks"
+					]
+				}
+			}
+		},
+		{
+			"name": "Networks - Get Details",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/networks/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"networks",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "network_name_or_id"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Networks - Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"Name\": \"my-network\",\n  \"Driver\": \"bridge\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/networks/create",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"networks",
+						"create"
+					]
+				}
+			}
+		},
+		{
+			"name": "Networks - Remove",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/networks/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"networks",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "network_name_or_id"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Networks - Connect Container",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"containerId\": \"container_name_or_id\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/networks/:id/connect",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"networks",
+						":id",
+						"connect"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "network_name_or_id"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Networks - Disconnect Container",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-API-Key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"containerId\": \"container_name_or_id\",\n  \"force\": false\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/docker/networks/:id/disconnect",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"docker",
+						"networks",
+						":id",
+						"disconnect"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "network_name_or_id"
+						}
+					]
+				}
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://docker.eravend.net"
+		},
+		{
+			"key": "apiKey",
+			"value": "your-api-key-here"
+		}
+	]
+}
