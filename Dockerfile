@@ -13,16 +13,6 @@ RUN npm ci --only=production
 # Copy application source
 COPY src ./src
 
-# Create non-root user for security
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001
-
-# Change ownership of app files
-RUN chown -R nodejs:nodejs /app
-
-# Switch to non-root user
-USER nodejs
-
 # Expose application port
 EXPOSE 3000
 
