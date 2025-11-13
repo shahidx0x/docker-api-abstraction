@@ -1,44 +1,10 @@
-# Docker API Abstraction Layer
-
-A secure Express.js API abstraction layer for Docker API with built-in authentication and rate limiting.
-
-## Why This Project Exists
-
-Docker's native HTTP API has a critical security flaw: **it has no built-in authentication**. Anyone who can reach your Docker API endpoint has complete root-level control over your host machine. This project solves that problem by providing:
-
-- **Authentication Layer**: Docker API is completely open by default. This adds JWT and API key authentication.
-- **Rate Limiting**: Protect against API abuse and DoS attacks - something Docker doesn't provide.
-- **Audit & Logging**: Track who's doing what with your Docker resources.
-- **Simplified Access Control**: Manage permissions through API keys instead of complex TLS certificate management.
-- **REST-ful Interface**: Clean, standardized endpoints that are easier to consume than raw Docker API.
-
-Without this layer (or similar protection), exposing Docker API to a network is equivalent to giving everyone root SSH access to your server.
-
-## Features
-
-- **Authentication**: Support for both JWT tokens and API keys
-- **Rate Limiting**: Configurable request rate limits per IP/API key
-- **Complete Docker API Coverage**: 
-  - Container management (list, create, start, stop, restart, remove)
-  - Image operations (list, pull, remove, search)
-  - Volume management (list, create, remove)
-  - Network operations (list, create, remove, connect/disconnect containers)
-  - System information and monitoring
-- **Security**: Helmet.js, CORS support
-- **Logging**: Morgan request logging
-- **Easy Configuration**: Environment-based configuration
-
-## Prerequisites
-
-- Node.js (v14 or higher)
-- Docker daemon running on your VPS
-- Docker API exposed (typically on port 2375)
+# Docker API Abstraction
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone git@github.com:shahidx0x/docker-api-abstraction.git
+git clone https://github.com/shahidx0x/docker-api-abstraction.git
 cd docker-api-abstraction
 ```
 
@@ -47,244 +13,64 @@ cd docker-api-abstraction
 npm install
 ```
 
-3. Create `.env` file from example:
+3. Set environment variables:
 ```bash
-cp .env.example .env
+export API_KEYS=your-api-key-here
+export JWT_SECRET=your-jwt-secret-here
+export NODE_ENV=production
 ```
 
-4. Configure your `.env` file:
-```env
-PORT=3000
-NODE_ENV=production
-
-# Docker Configuration (Unix Socket Only)
-DOCKER_SOCKET=/var/run/docker.sock
-DOCKER_API_VERSION=v1.43
-
-# Authentication
-JWT_SECRET=your-super-secret-jwt-key-change-this
-JWT_EXPIRES_IN=24h
-API_KEYS=key1,key2,key3
-
-# Rate Limiting
-RATE_LIMIT_WINDOW_MS=900000
-RATE_LIMIT_MAX_REQUESTS=100
-```
-
-## Usage
-
-### Start the server:
-
+4. Run the application:
 ```bash
-# Production
 npm start
-
-# Development (with auto-reload)
-npm run dev
 ```
 
-### Authentication
+## API Documentation
 
-The API supports two authentication methods:
+API documentation is available in the `postman/` folder as Postman collection JSON files:
 
-#### 1. API Key Authentication
-Add the `X-API-Key` header to your requests:
+- `Docker_Containers_Only.postman_collection.json` - Container operations
+- `images.postman_collection.json` - Image operations
+- `networks.postman_collection.json` - Network operations
+- `volumes.postman_collection.json` - Volume operations
+- `swarm.postman_collection.json` - Swarm operations
+- `system.postman_collection.json` - System operations
+
+Import these files into Postman to test the API endpoints.
+
+## Requirements
+
+- Node.js 18+
+- Docker daemon running
+- Docker socket access (`/var/run/docker.sock`)
+
+## Docker Run
 
 ```bash
-curl -H "X-API-Key: your-api-key" http://localhost:3000/api/docker/containers
-```
-
-#### 2. JWT Token Authentication
-Add the `Authorization` header with Bearer token:
-
-```bash
-curl -H "Authorization: Bearer your-jwt-token" http://localhost:3000/api/docker/containers
-```
-
-## API Endpoints
-
-### System Information
-
-- `GET /health` - Health check (no auth required)
-- `GET /api/docker/ping` - Ping Docker daemon
-- `GET /api/docker/version` - Get Docker version
-- `GET /api/docker/info` - Get system information
-- `GET /api/docker/system/df` - Get disk usage
-
-### Containers
-
-- `GET /api/docker/containers` - List containers (query: `?all=true`)
-- `GET /api/docker/containers/:id` - Get container details
-- `POST /api/docker/containers/create` - Create container
-- `POST /api/docker/containers/:id/start` - Start container
-- `POST /api/docker/containers/:id/stop` - Stop container (query: `?timeout=10`)
-- `POST /api/docker/containers/:id/restart` - Restart container
-- `DELETE /api/docker/containers/:id` - Remove container (query: `?force=true&volumes=true`)
-- `GET /api/docker/containers/:id/logs` - Get container logs
-- `GET /api/docker/containers/:id/stats` - Get container stats
-
-### Images
-
-- `GET /api/docker/images` - List images (query: `?all=true`)
-- `GET /api/docker/images/:name` - Get image details
-- `POST /api/docker/images/pull` - Pull image (body: `{image, tag}`)
-- `DELETE /api/docker/images/:name` - Remove image (query: `?force=true`)
-- `GET /api/docker/images/search/:term` - Search images
-
-### Volumes
-
-- `GET /api/docker/volumes` - List volumes
-- `GET /api/docker/volumes/:name` - Get volume details
-- `POST /api/docker/volumes/create` - Create volume
-- `DELETE /api/docker/volumes/:name` - Remove volume (query: `?force=true`)
-
-### Networks
-
-- `GET /api/docker/networks` - List networks
-- `GET /api/docker/networks/:id` - Get network details
-- `POST /api/docker/networks/create` - Create network
-- `DELETE /api/docker/networks/:id` - Remove network
-- `POST /api/docker/networks/:id/connect` - Connect container (body: `{containerId}`)
-- `POST /api/docker/networks/:id/disconnect` - Disconnect container (body: `{containerId, force}`)
-
-## Examples
-
-### List all containers:
-```bash
-curl -H "X-API-Key: your-api-key" \
-  "http://localhost:3000/api/docker/containers?all=true"
-```
-
-### Create and start a container:
-```bash
-# Create
-curl -X POST -H "X-API-Key: your-api-key" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "Image": "nginx:latest",
-    "name": "my-nginx"
-  }' \
-  http://localhost:3000/api/docker/containers/create
-
-# Start (use container ID from create response)
-curl -X POST -H "X-API-Key: your-api-key" \
-  http://localhost:3000/api/docker/containers/my-nginx/start
-```
-
-### Pull an image:
-```bash
-curl -X POST -H "X-API-Key: your-api-key" \
-  -H "Content-Type: application/json" \
-  -d '{"image": "nginx", "tag": "latest"}' \
-  http://localhost:3000/api/docker/images/pull
-```
-
-## Security Considerations
-
-1. **Always use HTTPS in production**
-2. **Change default JWT_SECRET** to a strong random value
-3. **Use strong API keys** and rotate them regularly
-4. **Configure rate limits** based on your needs
-5. **Secure Docker daemon** - don't expose it publicly without proper security
-6. **Use environment variables** for sensitive configuration
-
-## Docker Daemon Configuration
-
-To expose Docker API on your VPS:
-
-### Option 1: TCP Socket (for remote access)
-Edit `/etc/docker/daemon.json`:
-```json
-{
-  "hosts": ["unix:///var/run/docker.sock", "tcp://0.0.0.0:2375"]
-}
-```
-
-### Option 2: Unix Socket (local only, more secure)
-```env
-DOCKER_SOCKET_PATH=/var/run/docker.sock
-```
-
-**Warning**: Exposing Docker API without TLS is insecure. Consider using TLS or keeping it localhost-only.
-
-## Rate Limiting
-
-The API includes rate limiting to prevent abuse:
-- Default: 100 requests per 15 minutes per IP/API key
-- Configurable via environment variables
-- Health check endpoint is excluded from rate limiting
-
-## Error Handling
-
-All errors return JSON with the following format:
-```json
-{
-  "error": {
-    "message": "Error description",
-    "status": 500
-  }
-}
-```
-
-## Docker Deployment
-
-### Pull from GitHub Container Registry:
-
-```bash
-# Pull latest image
-docker pull ghcr.io/shahidx0x/docker-api-abstraction:latest
-
-# Run container
 docker run -d \
-  -p 3000:3000 \
-  -e DOCKER_HOST=your-docker-host \
-  -e DOCKER_PORT=2375 \
-  -e API_KEYS=your-api-key-1,your-api-key-2 \
-  -e JWT_SECRET=your-secret-key \
+  -p 4120:3000 \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -e API_KEYS=eravend-123456 \
+  -e JWT_SECRET=eravend-123456 \
+  -e NODE_ENV=production \
   --name docker-api-abstraction \
-  ghcr.io/shahidx0x/docker-api-abstraction:latest
+  ghcr.io/shahidx0x/docker-api-abstraction:master
 ```
 
-### Build locally:
+## API Endpoints JSON
 
-```bash
-# Build image
-docker build -t docker-api-abstraction .
+All endpoints require `X-API-Key: eravend-123456` header.
 
-# Run container
-docker run -d -p 3000:3000 -e API_KEYS=your-key docker-api-abstraction
-```
-
-### Using Docker Compose:
-
-```bash
-# Start services
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
-
-# Stop services
-docker-compose down
-```
-
-**Note**: Docker images are automatically built and pushed to GitHub Container Registry on every commit to master.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## License
-
-ISC
-
-## Author
-
-shahidx0x
-
-## Support
-
-For issues and questions, please open an issue on GitHub.
+Example container creation:
+```json
+{
+  "Image": "nginx:latest",
+  "Cmd": ["nginx", "-g", "daemon off;"],
+  "ExposedPorts": {
+    "80/tcp": {}
+  },
+  "HostConfig": {
+    "PortBindings": {
+      "80/tcp": [{"HostPort": "8080"}]
+    }
+  }
