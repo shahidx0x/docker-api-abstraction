@@ -229,11 +229,11 @@ All errors return JSON with the following format:
 
 ## Docker Deployment
 
-### Build and run with Docker:
+### Pull from GitHub Container Registry:
 
 ```bash
-# Build image
-docker build -t docker-api-abstraction .
+# Pull latest image
+docker pull ghcr.io/shahidx0x/docker-api-abstraction:latest
 
 # Run container
 docker run -d \
@@ -243,7 +243,17 @@ docker run -d \
   -e API_KEYS=your-api-key-1,your-api-key-2 \
   -e JWT_SECRET=your-secret-key \
   --name docker-api-abstraction \
-  docker-api-abstraction
+  ghcr.io/shahidx0x/docker-api-abstraction:latest
+```
+
+### Build locally:
+
+```bash
+# Build image
+docker build -t docker-api-abstraction .
+
+# Run container
+docker run -d -p 3000:3000 -e API_KEYS=your-key docker-api-abstraction
 ```
 
 ### Using Docker Compose:
@@ -259,7 +269,7 @@ docker-compose logs -f
 docker-compose down
 ```
 
-**Note**: Update `.env` file or set environment variables in `docker-compose.yml` before deploying.
+**Note**: Docker images are automatically built and pushed to GitHub Container Registry on every commit to master.
 
 ## Contributing
 
