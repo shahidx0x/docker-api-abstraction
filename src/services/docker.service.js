@@ -1,11 +1,24 @@
 const axios = require('axios');
+const http = require('http');
 
 class DockerService {
   constructor() {
     this.dockerHost = process.env.DOCKER_HOST || 'localhost';
     this.dockerPort = process.env.DOCKER_PORT || '2375';
     this.apiVersion = process.env.DOCKER_API_VERSION || 'v1.43';
-    this.baseURL = `http://${this.dockerHost}:${this.dockerPort}/${this.apiVersion}`;
+    
+    // Check if using Unix socket
+    if (this.dockerHost.startsWith('unix://')) {
+      this.socketPath = this.dockerHost.replace('unix://', '');
+      this.baseURL = `http://localhost/${this.apiVersion}`;
+      this.axiosConfig = {
+        socketPath: this.socketPath,
+        httpAgent: new http.Agent({ socketPath: this.socketPath })
+      };
+    } else {
+      this.baseURL = `http://${this.dockerHost}:${this.dockerPort}/${this.apiVersion}`;
+      this.axiosConfig = {};
+    }
   }
 
   /**
@@ -19,7 +32,8 @@ class DockerService {
         params,
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
+        ...this.axiosConfig
       };
 
       if (data) {
