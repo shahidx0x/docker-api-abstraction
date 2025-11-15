@@ -104,6 +104,58 @@ router.post('/containers/create-and-start', async (req, res, next) => {
   }
 });
 
+router.post('/containers/create-start-stop-remove', async (req, res, next) => {
+  try {
+    const { timeout = 30 } = req.query; // Default 30 seconds if not provided
+    const timeoutMs = parseInt(timeout) * 1000; // Convert to milliseconds
+
+    if (isNaN(timeoutMs) || timeoutMs <= 0) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Invalid timeout parameter. Must be a positive number in seconds.' 
+      });
+    }
+
+    // Create and start the container
+    const createResult = await dockerService.createContainer(req.body, req.query.name);
+    const containerId = createResult.Id;
+    
+    await dockerService.startContainer(containerId);
+
+    // Schedule stop and remove after timeout
+    setTimeout(async () => {
+      try {
+        // Stop the container
+        await dockerService.stopContainer(containerId, 10); // 10 second stop timeout
+        
+        // Remove the container
+        await dockerService.removeContainer(containerId, true, true); // force=true, volumes=true
+        
+        console.log(`Container ${containerId} stopped and removed after ${timeout} seconds`);
+      } catch (error) {
+        console.error(`Error stopping/removing container ${containerId}:`, error.message);
+      }
+    }, timeoutMs);
+
+    // Return immediate response
+    res.status(201).json({ 
+      success: true, 
+      data: {
+        ...createResult,
+        message: `Container created and started successfully. Will be stopped and removed after ${timeout} seconds.`,
+        scheduledRemoval: {
+          timeoutSeconds: parseInt(timeout),
+          stopTimeout: 10,
+          forceRemove: true,
+          removeVolumes: true
+        }
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/containers/:id/json', async (req, res, next) => {
   try {
     const result = await dockerService.request('GET', `/containers/${req.params.id}/json`, null, req.query);

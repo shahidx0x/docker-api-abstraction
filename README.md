@@ -93,3 +93,10 @@ Example container creation and start (single API call):
 
 **Endpoint:** `POST {{baseUrl}}/containers/create-and-start?name=my-container`  
 **Description:** Creates and immediately starts a container in one API call
+
+**Endpoint:** `POST {{baseUrl}}/containers/create-start-stop-remove?timeout=30&name=my-container`  
+**Description:** Creates, starts, and schedules automatic stop/removal of a container after specified timeout (in seconds)  
+**Query Parameters:**  
+- `timeout`: Time in seconds before stopping and removing the container (default: 30)  
+- `name`: Optional container name  
+**Note:** Container will be force-removed with volumes after the timeout period
