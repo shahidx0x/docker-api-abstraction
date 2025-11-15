@@ -74,3 +74,22 @@ Example container creation:
       "80/tcp": [{"HostPort": "8080"}]
     }
   }
+```
+
+Example container creation and start (single API call):
+```json
+{
+  "Image": "nginx:latest",
+  "Cmd": ["nginx", "-g", "daemon off;"],
+  "ExposedPorts": {
+    "80/tcp": {}
+  },
+  "HostConfig": {
+    "PortBindings": {
+      "80/tcp": [{"HostPort": "8080"}]
+    }
+  }
+```
+
+**Endpoint:** `POST {{baseUrl}}/containers/create-and-start?name=my-container`  
+**Description:** Creates and immediately starts a container in one API call

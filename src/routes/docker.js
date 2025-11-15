@@ -80,6 +80,30 @@ router.post('/containers/create', async (req, res, next) => {
   }
 });
 
+router.post('/containers/create-and-start', async (req, res, next) => {
+  try {
+    // Create the container
+    const createResult = await dockerService.createContainer(req.body, req.query.name);
+    
+    // Extract container ID from the response
+    const containerId = createResult.Id;
+    
+    // Start the container
+    await dockerService.startContainer(containerId);
+    
+    // Return combined response
+    res.status(201).json({ 
+      success: true, 
+      data: {
+        ...createResult,
+        message: 'Container created and started successfully'
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/containers/:id/json', async (req, res, next) => {
   try {
     const result = await dockerService.request('GET', `/containers/${req.params.id}/json`, null, req.query);
